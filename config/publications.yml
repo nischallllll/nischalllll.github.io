@@ -4,7 +4,7 @@ HEADER:
 PUBLICATIONS:
   - title: "Sample Publication 1"
     category: ["Cancer Genomics", "Single-cell Analysis", "Spatial Transcriptomics"]
-    image: "config/assets/icons/bolt.svg"
+    image: "https://media.gettyimages.com/id/1701193275/photo/cancer-malignant-cells.jpg?s=2048x2048&w=gi&k=20&c=RsbSGy5WBeS-uYWvb1RSkCnQjMdMOS4DeKHVA81hTdQ="
     url: "https://scholar.google.com/"
     authors: "Bhandari, N., et al."
     journal: "ABC"
