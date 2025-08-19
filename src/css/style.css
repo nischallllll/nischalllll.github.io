@@ -343,7 +343,8 @@ main {
 
 .sidebar {
   margin-bottom: 15px;
-  max-height: 112px;
+  /* increased to accommodate multi-line role without expanding */
+  max-height: 160px;
   overflow: hidden;
   transition: var(--transition-2);
 }
@@ -1686,7 +1687,7 @@ textarea.form-input::-webkit-resizer {
    */
 
   .sidebar {
-    max-height: 180px;
+    max-height: 220px;
     margin-bottom: 30px;
   }
 
