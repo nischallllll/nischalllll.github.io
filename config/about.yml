@@ -3,43 +3,28 @@ HEADER:
 
 PRESENTATION:
   description: |
-    I'm Creative Director and UI/UX Designer from Sydney, Australia, working in web development and print media. I enjoy turning complex problems into simple, beautiful and intuitive designs.
+    I am a Computational Biologist at Cold Spring Harbor Laboratory working in Dr. Peter Westcott's Laboratory. My research focuses on understanding the genomic basis of cancer through advanced computational approaches and cutting-edge sequencing technologies.
 
-    My job is to build your website so that it is functional and user-friendly but at the same time attractive. Moreover, I add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring across your message and identity in the most creative way. I created web design for many famous brand companies.
+    My work centers on cancer genomics and disease heterogeneity, where I leverage diverse bioinformatics pipelines to dissect the transcriptomic and cellular factors driving disease progression.
+
+    By integrating high-resolution genomic data with robust computational analysis, I aim to uncover the governing principles of human diseases, identify novel therapeutic targets, contribute to precision medicine approaches, and develop computational tools for genomic analysis.
 
 DOING:
   enabled: true
-  label: "What I'm doing"
+  label: "🧬 Research Focus"
   items:
-    - title: "Mobile Apps"
-      icon: "config/assets/icons/mobile.svg"
-      description: "Professional development of applications for iOS and Android."
-    - title: "Scripting"
+    - title: "Cancer Genomics Research"
       icon: "config/assets/icons/code.svg"
-      description: "Automation and task scripting using Python to enhance efficiency and productivity."
-    - title: "UI/UX Designing"
-      icon: "config/assets/icons/compass.svg"
-      description: "Intuitive and visually appealing user interfaces and user experiences."
-    - title: "Web Development"
+      description: "Analyzing high-throughput genomic data to understand cancer progression and disease heterogeneity."
+    - title: "Single-cell Analysis"
+      icon: "config/assets/icons/ai.svg"
+      description: "Processing and analyzing single-cell RNA sequencing data to uncover cellular dynamics."
+    - title: "Bioinformatics Pipeline Development"
       icon: "config/assets/icons/laptop-code.svg"
-      description: "High-quality development of sites at the professional level."
-
-SKILLS:
-  enabled: true
-  label: "Soft Skills"
-  items:
-    - title: "Fast Learner"
-      icon: "config/assets/icons/bolt.svg"
-      description: "I have the ability to quickly acquire new knowledge and adapt to changing technological environments."
-    - title: "Teamwork"
-      icon: "config/assets/icons/user.svg"
-      description: "I collaborate effectively in multidisciplinary projects and communicate clearly with team members."
-    - title: "Problem Solving"
-      icon: "config/assets/icons/gear.svg"
-      description: "I am creative and efficient in identifying and solving technical problems."
-    - title: "Effective Communication"
-      icon: "config/assets/icons/comment.svg"
-      description: "I have the skill to convey ideas clearly and concisely, both technically and non-technically."
+      description: "Developing computational tools and pipelines for genomic data analysis."
+    - title: "Spatial Transcriptomics"
+      icon: "config/assets/icons/compass.svg"
+      description: "Analyzing spatial transcriptomic data to understand tissue organization and cell interactions."
 
 TECHNOLOGIES:
   enabled: true
