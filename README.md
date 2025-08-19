@@ -2,7 +2,7 @@
 <div align="center">
 
 <h1 style="border-bottom: none">
-    <b><a href="https://ivansaul.github.io/personal-portfolio">Personal Portfolio - Developer</a></b>
+    <b><a href="https://nishcimp.github.io/o">Personal Portfolio </a></b>
 </h1>
 
 **`Personal Portfolio`** is a fully responsive personal developer portfolio single-page website, <br/>
