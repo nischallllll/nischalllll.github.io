@@ -16,7 +16,7 @@
   <!--- DOING -->
   {% if about.DOING.enabled %}
   <section class="service">
-    <h3 class="h3 service-title">What i'm doing</h3>
+    <h3 class="h3 service-title">{{about.DOING.label}}</h3>
     <ul class="service-list">
       {% for item in about.DOING["items"] %}
       <li class="service-item">
@@ -35,12 +35,12 @@
   </section>
   {% endif %}
 
-  <!--- SKILLS -->
-  {% if about.SKILLS.enabled %}
+  <!--- CURRENT -->
+  {% if about.CURRENT.enabled %}
   <section class="testimonials">
-    <h3 class="h3 testimonials-title">{{about.SKILLS.label}}</h3>
+    <h3 class="h3 testimonials-title">{{about.CURRENT.label}}</h3>
     <ul class="testimonials-list has-scrollbar">
-      {% for item in about.SKILLS["items"] %}
+      {% for item in about.CURRENT["items"] %}
       <li class="testimonials-item">
         <div class="content-card" data-testimonials-item>
           <figure class="testimonials-avatar-box">

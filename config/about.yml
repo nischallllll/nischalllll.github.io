@@ -26,25 +26,13 @@ DOING:
       icon: "config/assets/icons/compass.svg"
       description: "Analyzing spatial transcriptomic data to understand tissue organization and cell interactions."
 
-SKILLS:
+CURRENT:
   enabled: true
-  label: "🔬 Technical Expertise"
+  label: "📍 Current Position"
   items:
-    - title: "Single-cell RNA sequencing (scRNA-seq)"
+    - title: "Computational Biologist"
       icon: "config/assets/icons/ai.svg"
-      description: "Expertise in processing and analyzing single-cell transcriptomic data to understand cellular heterogeneity and dynamics."
-    - title: "Bulk RNA sequencing"
-      icon: "config/assets/icons/code.svg"
-      description: "Comprehensive analysis of bulk RNA-seq data for gene expression profiling and differential expression analysis."
-    - title: "Spatial transcriptomics"
-      icon: "config/assets/icons/compass.svg"
-      description: "Analysis of spatial transcriptomic data to understand tissue organization and cell-cell interactions."
-    - title: "Cancer genomics and transcriptomics"
-      icon: "config/assets/icons/code.svg"
-      description: "Specialized analysis of cancer genomic and transcriptomic data to identify driver mutations and therapeutic targets."
-    - title: "Bioinformatics pipeline development"
-      icon: "config/assets/icons/laptop-code.svg"
-      description: "Development of robust computational pipelines for high-throughput genomic data analysis and quality control."
+      description: "Westcott Laboratory, Cold Spring Harbor Laboratory"
 
 TECHNOLOGIES:
   enabled: true
