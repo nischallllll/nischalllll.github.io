@@ -1,0 +1,11 @@
+HEADER:
+  label: "Publications"
+
+PUBLICATIONS:
+  - title: "Sample Publication 1"
+    category: ["Cancer Genomics", "Single-cell Analysis", "Spatial Transcriptomics"]
+    image: "config/assets/publications/pub-1.jpg"
+    url: "https://scholar.google.com/"
+    authors: "Bhandari, N., et al."
+    journal: "ABC"
+    year: "2024"

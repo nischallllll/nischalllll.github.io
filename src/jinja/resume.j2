@@ -14,13 +14,14 @@
         
         {% if resume.PDF_CV.show_preview %}
         <div class="pdf-preview-container">
-          <iframe 
-            src="{{resume.PDF_CV.pdf_url}}" 
+          <object 
+            data="{{resume.PDF_CV.pdf_url}}" 
+            type="application/pdf"
             width="100%" 
             height="{{resume.PDF_CV.preview_height}}"
-            style="border: 1px solid var(--jet); border-radius: 8px;"
-            title="CV Preview">
-          </iframe>
+            style="border: 1px solid var(--jet); border-radius: 8px;">
+            <p>Your browser doesn't support PDF preview. <a href="{{resume.PDF_CV.pdf_url}}" target="_blank">Click here to view the PDF</a>.</p>
+          </object>
         </div>
         {% endif %}
         
