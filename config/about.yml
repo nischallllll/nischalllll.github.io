@@ -31,7 +31,7 @@ CURRENT:
   label: "📍 Current Position"
   items:
     - title: "Computational Biologist"
-      icon: "config/assets/icons/cshl_logo_alternate_RGB.png"
+      icon: "config/assets/icons/cshl_logo_alternate-RGB_KO.png"
       description: "Westcott Laboratory, Cold Spring Harbor Laboratory"
 
 TECHNOLOGIES:
