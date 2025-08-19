@@ -1,16 +1,16 @@
-<!-- portfolio.j2 -->
-<article class="portfolio" data-page="portfolio">
+<!-- talks.j2 -->
+<article class="talks" data-page="talks">
   <header>
-    <h2 class="h2 article-title">{{projects.HEADER.label}}</h2>
+    <h2 class="h2 article-title">{{talks.HEADER.label}}</h2>
   </header>
-  <section class="projects">
+  <section class="talks">
     <ul class="filter-list">
       <li class="filter-item">
         <button class="active" data-filter-btn>All</button>
       </li>
       {# Flatten all categories into a single list #}
       {% set all_categories = [] %}
-      {% for project in projects.PROJECTS %}
+      {% for project in talks.TALKS %}
         {% if project.category is string %}
           {% set _ = all_categories.append(project.category) %}
         {% else %}
@@ -45,7 +45,7 @@
       </ul>
     </div>
       <ul class="project-list">
-        {% for item in projects.PROJECTS %}
+        {% for item in talks.TALKS %}
           {% set categories_list = item.category if item.category is iterable and not item.category is string else [item.category] %}
           <li class="project-item  active" data-filter-item data-category="{{ categories_list | join(' ') | lower }}">
             {% if item.url %}

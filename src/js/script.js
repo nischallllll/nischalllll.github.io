@@ -11,8 +11,10 @@ const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
 const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 
-// sidebar toggle functionality for mobile
-sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
+// sidebar toggle functionality for mobile (guard in case element missing)
+if (sidebarBtn && sidebar) {
+  sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
+}
 
 
 
@@ -27,92 +29,92 @@ const modalImg = document.querySelector("[data-modal-img]");
 const modalTitle = document.querySelector("[data-modal-title]");
 const modalText = document.querySelector("[data-modal-text]");
 
-// modal toggle function
+// modal toggle function (guard)
 const testimonialsModalFunc = function () {
-  modalContainer.classList.toggle("active");
-  overlay.classList.toggle("active");
+  if (modalContainer && overlay) {
+    modalContainer.classList.toggle("active");
+    overlay.classList.toggle("active");
+  }
 }
 
-// add click event to all modal items
-for (let i = 0; i < testimonialsItem.length; i++) {
+// add click event to all modal items (guard)
+if (testimonialsItem && testimonialsItem.length && modalImg && modalTitle && modalText) {
+  for (let i = 0; i < testimonialsItem.length; i++) {
+    testimonialsItem[i].addEventListener("click", function () {
+      const avatar = this.querySelector("[data-testimonials-avatar]");
+      const titleEl = this.querySelector("[data-testimonials-title]");
+      const textEl = this.querySelector("[data-testimonials-text]");
 
-  testimonialsItem[i].addEventListener("click", function () {
+      if (avatar && modalImg) {
+        modalImg.src = avatar.src;
+        modalImg.alt = avatar.alt || '';
+      }
+      if (titleEl && modalTitle) modalTitle.innerHTML = titleEl.innerHTML;
+      if (textEl && modalText) modalText.innerHTML = textEl.innerHTML;
 
-    modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
-    modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
-    modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
-    modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
-
-    testimonialsModalFunc();
-
-  });
-
+      testimonialsModalFunc();
+    });
+  }
 }
 
-// add click event to modal close button
-modalCloseBtn.addEventListener("click", testimonialsModalFunc);
-overlay.addEventListener("click", testimonialsModalFunc);
+// add click event to modal close button (guard)
+if (modalCloseBtn) modalCloseBtn.addEventListener("click", testimonialsModalFunc);
+if (overlay) overlay.addEventListener("click", testimonialsModalFunc);
 
 
 
-// custom select variables
-const select = document.querySelector("[data-select]");
-const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-selecct-value]");
-const filterBtn = document.querySelectorAll("[data-filter-btn]");
+// Initialize filter/select behavior per section (projects, talks)
+const sectionsWithFilters = document.querySelectorAll("section.projects, section.talks");
 
-select.addEventListener("click", function () { elementToggleFunc(this); });
+sectionsWithFilters.forEach((section) => {
+  const select = section.querySelector("[data-select]");
+  const selectItems = section.querySelectorAll("[data-select-item]");
+  const selectValue = section.querySelector("[data-selecct-value]");
+  const filterBtn = section.querySelectorAll("[data-filter-btn]");
+  const filterItems = section.querySelectorAll("[data-filter-item]");
 
-// add event in all select items
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener("click", function () {
+  if (select) {
+    select.addEventListener("click", function () { elementToggleFunc(this); });
 
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
-    filterFunc(selectedValue);
-
-  });
-}
-
-// filter variables
-const filterItems = document.querySelectorAll("[data-filter-item]");
-
-const filterFunc = function (selectedValue) {
-
-  for (let i = 0; i < filterItems.length; i++) {
-    const itemCategories = filterItems[i].dataset.category;
-
-    if (selectedValue === "all") {
-      filterItems[i].classList.add("active");
-    } else if (itemCategories && itemCategories.includes(selectedValue)) {
-      filterItems[i].classList.add("active");
-    } else {
-      filterItems[i].classList.remove("active");
-    }
-
+    selectItems.forEach((si) => {
+      si.addEventListener("click", function () {
+        const selectedValue = this.innerText.toLowerCase();
+        if (selectValue) selectValue.innerText = this.innerText;
+        elementToggleFunc(select);
+        applyFilter(selectedValue, filterItems);
+      });
+    });
   }
 
-}
+  if (filterBtn.length) {
+    let lastClickedBtn = filterBtn[0];
+    filterBtn.forEach((fb) => {
+      fb.addEventListener("click", function () {
+        const selectedValue = this.innerText.toLowerCase();
+        if (selectValue) selectValue.innerText = this.innerText;
+        applyFilter(selectedValue, filterItems);
 
-// add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
+        if (lastClickedBtn) lastClickedBtn.classList.remove("active");
+        this.classList.add("active");
+        lastClickedBtn = this;
+      });
+    });
+  }
 
-for (let i = 0; i < filterBtn.length; i++) {
+});
 
-  filterBtn[i].addEventListener("click", function () {
-
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    filterFunc(selectedValue);
-
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
-
+const applyFilter = function (selectedValue, items) {
+  items.forEach((it) => {
+    const itemCategories = it.dataset.category;
+    if (selectedValue === "all") {
+      it.classList.add("active");
+    } else if (itemCategories && itemCategories.includes(selectedValue)) {
+      it.classList.add("active");
+    } else {
+      it.classList.remove("active");
+    }
   });
-
-}
+};
 
 
 
@@ -139,22 +141,59 @@ for (let i = 0; i < formInputs.length; i++) {
 
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
-const pages = document.querySelectorAll("[data-page]");
+// only select article elements as pages to avoid matching nav buttons that also carry data-page
+const pages = document.querySelectorAll("article[data-page]");
 
+// add event to all nav link
 // add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
+    const clickedName = (this.getAttribute('data-page') || this.textContent).toLowerCase().trim();
 
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
+    // Find the target article (page) element by its data-page attribute
+    const targetPage = document.querySelector(`article[data-page="${clickedName}"]`);
+
+    if (targetPage) {
+      // deactivate all pages then activate the target
+      Array.from(pages).forEach((p) => p.classList.remove('active'));
+      targetPage.classList.add('active');
+
+      // persist the currently active page so it can be restored on load
+      try {
+        localStorage.setItem('activePage', clickedName);
+      } catch (e) {
+        // ignore storage errors (e.g., Safari private mode)
       }
     }
 
+    // update nav link active state
+    Array.from(navigationLinks).forEach((nl) => nl.classList.remove('active'));
+    this.classList.add('active');
+
+    window.scrollTo(0, 0);
   });
+}
+
+
+// Restore saved active page (if any) on load so navbar keeps state
+try {
+  const savedPage = (localStorage.getItem('activePage') || '').toLowerCase().trim();
+  if (savedPage) {
+    const savedArticle = document.querySelector(`article[data-page="${savedPage}"]`);
+    const savedNav = Array.from(navigationLinks).find((nl) => {
+      return ((nl.getAttribute('data-page') || nl.textContent) || '').toLowerCase().trim() === savedPage;
+    });
+
+    if (savedArticle) {
+      Array.from(pages).forEach((p) => p.classList.remove('active'));
+      savedArticle.classList.add('active');
+    }
+
+    if (savedNav) {
+      Array.from(navigationLinks).forEach((nl) => nl.classList.remove('active'));
+      savedNav.classList.add('active');
+    }
+  }
+} catch (e) {
+  // ignore storage read errors
 }

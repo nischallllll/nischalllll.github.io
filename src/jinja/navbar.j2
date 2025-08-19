@@ -6,7 +6,7 @@
         {% if item.label == "CV" %}
           <a class="navbar-link" href="config/assets/Nischal_Bhandari_CV.pdf" target="_blank" rel="noopener">{{ item.label }}</a>
         {% else %}
-          <button class="navbar-link {% if loop.index0 == 0 %}active{% endif %}" data-nav-link>{{ item.label }}</button>
+          <button class="navbar-link {% if loop.index0 == 0 %}active{% endif %}" data-nav-link data-page="{{ item.label | lower }}">{{ item.label }}</button>
         {% endif %}
       </li>
     {% endfor %}

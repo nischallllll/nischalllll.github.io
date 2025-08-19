@@ -52,7 +52,11 @@
           {% else %}
             data-category="{% for cat in item.category %}{{cat | lower}}{% if not loop.last %} {% endif %}{% endfor %}"
           {% endif %}>
+        {% if item.url %}
         <a href="{{item.url}}" target="_blank">
+        {% else %}
+        <div class="publication-item-inner">
+        {% endif %}
           <figure class="publication-img">
             <div class="publication-item-icon-box">
               <ion-icon name="document-text-outline"></ion-icon>
@@ -73,7 +77,11 @@
               {% endif %}
             </div>
           </div>
+        {% if item.url %}
         </a>
+        {% else %}
+        </div>
+        {% endif %}
       </li>
       {% endfor %}
     </ul>

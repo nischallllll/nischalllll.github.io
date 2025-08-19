@@ -6,9 +6,16 @@
 
   <!--- PRESENTATION --->
   <section class="about-text">
+    {# collect and render only non-empty lines; mark the first rendered paragraph as a lead #}
+    {% set printed = namespace(flag=false) %}
     {% for line in about.PRESENTATION.description.split('\n') %}
       {% if line.strip() %}
-      <p>{{ line }}</p>
+        {% if not printed.flag %}
+          <p class="lead">{{ line | safe }}</p>
+          {% set printed.flag = true %}
+        {% else %}
+          <p>{{ line | safe }}</p>
+        {% endif %}
       {% endif %}
     {% endfor %}
   </section>
@@ -55,7 +62,7 @@
         </div>
       </li>
       {% endfor %}
-      < </ul>
+  </ul>
   </section>
 
   <!--- popup modal -->
