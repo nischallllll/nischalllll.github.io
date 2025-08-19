@@ -7,10 +7,10 @@ HEADER:
   label: "Show Contacts"
 
 USER:
-  role: "Cancer | Genetics | Immunology | Computational Biology"
   name: "Nischal Bhandari"
-  username: "nishcomp" # <-- This needs to be the same as your GitHub username
-  avatar: "config/assets/icons/user.svg"   # avatars/my-avatar.png
+  username: "nishcomp"
+  avatar: "config/assets/icons/user.svg"
+  role: "Cancer | Genetics | Immunology | Computational Biology"
 
 INFO:
   - label: "Email"
