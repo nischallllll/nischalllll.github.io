@@ -1,13 +1,14 @@
 <!-- navbar.j2 -->
 <nav class="navbar">
   <ul class="navbar-list">
-    <li class="navbar-item">
-      <button class="navbar-link  active" data-nav-link>{{ navbar.NAVBAR[0].label }}</button>
-    </li>
-    {% for item in navbar.NAVBAR[1:] %}
-    <li class="navbar-item">
-      <button class="navbar-link" data-nav-link>{{ item.label }}</button>
-    </li>
+    {% for item in navbar.NAVBAR %}
+      <li class="navbar-item">
+        {% if item.label == "CV" %}
+          <a class="navbar-link" href="config/assets/Nischal_Bhandari_CV.pdf" target="_blank" rel="noopener">{{ item.label }}</a>
+        {% else %}
+          <button class="navbar-link {% if loop.index0 == 0 %}active{% endif %}" data-nav-link>{{ item.label }}</button>
+        {% endif %}
+      </li>
     {% endfor %}
   </ul>
 </nav>
