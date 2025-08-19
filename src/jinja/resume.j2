@@ -4,6 +4,37 @@
     <h2 class="h2 article-title">{{resume.HEADER.label}}</h2>
   </header>
 
+  <!-- PDF CV DOWNLOAD -->
+  {% if resume.PDF_CV.enabled %}
+  <section class="pdf-cv-section">
+    <div class="pdf-cv-container">
+      <div class="pdf-cv-content">
+        <h3 class="h3 pdf-cv-title">{{resume.PDF_CV.title}}</h3>
+        <p class="pdf-cv-description">{{resume.PDF_CV.description}}</p>
+        
+        {% if resume.PDF_CV.show_preview %}
+        <div class="pdf-preview-container">
+          <iframe 
+            src="{{resume.PDF_CV.pdf_url}}" 
+            width="100%" 
+            height="{{resume.PDF_CV.preview_height}}"
+            style="border: 1px solid var(--jet); border-radius: 8px;"
+            title="CV Preview">
+          </iframe>
+        </div>
+        {% endif %}
+        
+        <div class="pdf-cv-button-container">
+          <a href="{{resume.PDF_CV.pdf_url}}" class="pdf-cv-button" download>
+            <ion-icon name="{{resume.PDF_CV.icon}}"></ion-icon>
+            <span>{{resume.PDF_CV.button_text}}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
   <!-- EDUCATION -->
   {% if resume.EDUCATION.enabled %}
   <section class="timeline">

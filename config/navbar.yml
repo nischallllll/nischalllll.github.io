@@ -1,6 +1,7 @@
 NAVBAR:
   - label: "About"
-  - label: "Resume"
+  - label: "Publications"
   - label: "Portfolio"
-  - label: "Blog"
-  - label: "Contact"
+  - label: "CV"
+#  - label: "Blog"
+#  - label: "Contact"
