@@ -4,5 +4,5 @@ HEADER:
 PROJECTS:
   - title: "STING: Segmenting Transcriptomics in Neighborhoods of Genes"
     category: ["Bioinformatics", "R", "Package"]
-    image: "https://github.com/nishcomp/STING/blob/main/images/p1_crc_CXCR4_hotspot_neighbors.png"
+    image: "https://github.com/nishcomp/STING/blob/main/images/p1_crc_CXCR4_hotspot_neighbors.png?raw=true"
     url: "https://github.com/nishcomp/STING"
