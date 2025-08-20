@@ -17,18 +17,15 @@ EXPERIENCE:
   label: "Research Experience"
   items: []
   items:   
-    - position: "Research Assistant, Molecular Biology Lab"
+    - position: "Research Assistant, Molecular Biology Lab, Ramapo College of New Jersey"
       period: "Aug 2022 – May 2023"
-      organization: "Ramapo College of New Jersey"
       location: "Mahwah, NJ"
 
-    - position: "Bioinformatics Intern, Computational Biology Lab"
+    - position: "Bioinformatics Intern, Computational Biology Lab, New York Genome Center"
       period: "Jun – Aug 2023"
-      organization: "New York Genome Center, Manhattan, NY"
       location: "New York, NY"
-    - position: "Computational Biologist, Westcott Lab"
+    - position: "Computational Biologist, Westcott Lab, Cold Spring Harbor Laboratory"
       period: "Jun 2024 – Present"
-      organization: "Cold Spring Harbor Laboratory, NY"
       location: "Cold Spring Harbor, NY"
 
 LANGUAGES:
