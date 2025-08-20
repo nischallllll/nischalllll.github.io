@@ -21,9 +21,17 @@
       <li class="timeline-item">
         <h4 class="h4 timeline-item-title">{{item.institution}}</h4>
         <span>{{item.period}}</span>
+        {% if item.description is iterable and item.description is not string %}
+        <ul class="timeline-text timeline-text-list">
+          {% for d in item.description %}
+          <li>{{ d }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
         <p class="timeline-text">
           {{item.description}}
         </p>
+        {% endif %}
       </li>
       {% endfor %}
     </ol>
@@ -44,9 +52,17 @@
       <li class="timeline-item">
         <h4 class="h4 timeline-item-title">{{item.position}}</h4>
         <span>{{item.period}}</span>
+        {% if item.description is iterable and item.description is not string %}
+        <ul class="timeline-text timeline-text-list">
+          {% for d in item.description %}
+          <li>{{ d }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
         <p class="timeline-text">
           {{item.description}}
         </p>
+        {% endif %}
       </li>
       {% endfor %}
     </ol>

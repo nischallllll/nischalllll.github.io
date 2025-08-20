@@ -132,6 +132,18 @@ span {
   display: block;
 }
 
+/* allow lists to show bullets in content areas (we intentionally reset default list styles globally) */
+.timeline-text-list {
+  list-style: disc;
+  margin-left: 1rem;
+  color: var(--light-gray);
+  line-height: 1.6;
+}
+
+.timeline-text-list li {
+  margin-bottom: 0.5rem;
+}
+
 button {
   font: inherit;
   background: none;
