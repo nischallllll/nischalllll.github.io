@@ -4,37 +4,8 @@
     <h2 class="h2 article-title">{{resume.HEADER.label}}</h2>
   </header>
 
-  <!-- PDF CV DOWNLOAD -->
-  {% if resume.PDF_CV.enabled %}
-  <section class="pdf-cv-section">
-    <div class="pdf-cv-container">
-      <div class="pdf-cv-content">
-        <h3 class="h3 pdf-cv-title">{{resume.PDF_CV.title}}</h3>
-        <p class="pdf-cv-description">{{resume.PDF_CV.description}}</p>
-        
-        {% if resume.PDF_CV.show_preview %}
-        <div class="pdf-preview-container">
-          <object 
-            data="{{resume.PDF_CV.pdf_url}}" 
-            type="application/pdf"
-            width="100%" 
-            height="{{resume.PDF_CV.preview_height}}"
-            style="border: 1px solid var(--jet); border-radius: 8px;">
-            <p>Your browser doesn't support PDF preview. <a href="{{resume.PDF_CV.pdf_url}}" target="_blank">Click here to view the PDF</a>.</p>
-          </object>
-        </div>
-        {% endif %}
-        
-        <div class="pdf-cv-button-container">
-          <a href="{{resume.PDF_CV.pdf_url}}" class="pdf-cv-button" download>
-            <ion-icon name="{{resume.PDF_CV.icon}}"></ion-icon>
-            <span>{{resume.PDF_CV.button_text}}</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-  {% endif %}
+  {# PDF CV block intentionally moved lower so legacy sections (Education/Experience/etc)
+     render first; the preview is not shown inline by default. #}
 
   <!-- EDUCATION -->
   {% if resume.EDUCATION.enabled %}
@@ -130,4 +101,74 @@
     </ul>
   </section>
   {% endif %}
+
+  {% if resume.PDF_CV.enabled %}
+  <section class="pdf-cv-section">
+    <div class="pdf-cv-container">
+      <div class="pdf-cv-content">
+        <h3 class="h3 pdf-cv-title">{{resume.PDF_CV.title}}</h3>
+        <p class="pdf-cv-description">{{resume.PDF_CV.description}}</p>
+        <div class="pdf-cv-button-container">
+          <a href="{{resume.PDF_CV.pdf_url}}" class="pdf-cv-button" download>
+            <ion-icon name="{{resume.PDF_CV.icon}}"></ion-icon>
+            <span>{{resume.PDF_CV.button_text}}</span>
+          </a>
+          <button class="pdf-cv-button pdf-view-btn" type="button" aria-haspopup="dialog" aria-controls="pdf-modal">
+            <ion-icon name="eye-outline"></ion-icon>
+            <span>View CV</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
 </article>
+<!-- PDF Modal Viewer -->
+<div id="pdf-modal" class="pdf-modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="pdf-modal-overlay" data-pdf-overlay></div>
+  <div class="pdf-modal-panel" role="document">
+    <button class="pdf-modal-close" aria-label="Close CV viewer">&times;</button>
+    <div class="pdf-modal-body">
+      <object id="pdf-modal-object" data="{{resume.PDF_CV.pdf_url}}" type="application/pdf" width="100%" height="100%">
+        <p>Your browser doesn't support PDF preview. <a href="{{resume.PDF_CV.pdf_url}}" target="_blank">Click here to view the PDF</a>.</p>
+      </object>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function(){
+    const openBtn = document.querySelector('.pdf-view-btn');
+    const modal = document.getElementById('pdf-modal');
+    const overlay = modal && modal.querySelector('[data-pdf-overlay]');
+    const closeBtn = modal && modal.querySelector('.pdf-modal-close');
+    const previouslyFocused = {el: null};
+
+    function openModal(){
+      if(!modal) return;
+      previouslyFocused.el = document.activeElement;
+      modal.setAttribute('aria-hidden','false');
+      modal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      // focus the close button for keyboard users
+      closeBtn && closeBtn.focus();
+    }
+
+    function closeModal(){
+      if(!modal) return;
+      modal.setAttribute('aria-hidden','true');
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+      if(previouslyFocused.el) previouslyFocused.el.focus();
+    }
+
+    if(openBtn) openBtn.addEventListener('click', openModal);
+    if(overlay) overlay.addEventListener('click', closeModal);
+    if(closeBtn) closeBtn.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') closeModal();
+    });
+
+  })();
+</script>

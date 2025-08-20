@@ -284,14 +284,73 @@ article.active {
   font-size: clamp(16px, 1.9vw, 18px);
   line-height: 1.7;
   color: var(--white-2);
+  /* limit line length for readability by default (short view) */
   max-width: 66ch;
-  /* limit line length for readability */
   margin: 0.6rem 0 1.2rem 0;
   font-weight: var(--fw-400);
 }
 
 .about-text p {
   margin-bottom: 1rem;
+}
+
+/* Ensure header is a positioning context so the absolute toggle is placed relative to it */
+.about header {
+  position: relative;
+}
+
+.about-toggle-row {
+  margin-top: 6px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Make about text use full page width by default; constrain only the short version
+   Keep font size and lead styles identical for short and long views */
+.about-text {
+  /* override earlier max-width for short-only layout */
+  max-width: none;
+  color: var(--white-2);
+  font-size: clamp(16px, 1.9vw, 18px);
+  line-height: 1.7;
+  font-weight: var(--fw-400);
+  margin: 0.6rem 0 1.2rem 0;
+}
+
+.about-text p {
+  margin-bottom: 1rem;
+}
+
+/* constrain the short presentation to a readable measure */
+#short-version {
+  max-width: 66ch;
+  margin: 0.6rem 0 1.2rem 0;
+}
+
+/* ensure long version stretches the full width */
+.about .about-text #long-version {
+  max-width: none;
+  margin: 0.6rem 0 1.2rem 0;
+}
+
+/* Ensure the long presentation uses the same typography as the short view
+   - the selectors use an ID to win over other .about-text rules that appear
+     later in the file. Keeps the lead paragraph bold and larger. */
+.about .about-text #long-version,
+.about .about-text #long-version p {
+  color: var(--white-2);
+  font-size: clamp(16px, 1.9vw, 18px);
+  line-height: 1.7;
+  font-weight: var(--fw-400);
+}
+
+.about .about-text #long-version .lead {
+  font-size: clamp(18px, 2.2vw, 20px);
+  line-height: 1.8;
+  font-weight: var(--fw-500);
+  margin-bottom: 1.1rem;
+  color: var(--white-2);
 }
 
 /* Highlight important terms using <strong>, <b>, or <mark> in author content */
@@ -323,6 +382,82 @@ article.active {
   font-weight: var(--fw-500);
   margin-bottom: 1.1rem;
   color: var(--white-2);
+}
+
+/* Toggle switch (always visible) */
+.toggle-switch {
+  display: inline-flex;
+  align-items: center;
+  width: 48px;
+  height: 26px;
+  /* place as a normal flow element so it sits under the H2 and aligns left */
+  position: static;
+  margin-top: 8px;
+  margin-left: 0;
+  z-index: 12;
+}
+
+.toggle-checkbox {
+  display: none;
+}
+
+.toggle-slider {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--jet);
+  border-radius: 26px;
+  transition: background var(--transition-1);
+}
+
+.toggle-slider::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 18px;
+  height: 18px;
+  background: var(--orange-yellow-crayola);
+  border-radius: 50%;
+  transition: transform var(--transition-1);
+}
+
+.toggle-checkbox:checked+.toggle-slider {
+  background: var(--onyx);
+}
+
+.toggle-checkbox:checked+.toggle-slider::before {
+  transform: translateX(22px);
+}
+
+/* Full-width long presentation */
+.about .about-text #long-version {
+  max-width: none;
+  margin: 0.6rem 0 1.2rem 0;
+}
+
+/* Animations for switching */
+.fade-slide-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.fade-slide-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+
+.fade-slide-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-slide-exit-active {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 220ms ease, transform 220ms ease;
 }
 
 .has-scrollbar::-webkit-scrollbar {
@@ -364,6 +499,68 @@ article.active {
   background: var(--bg-gradient-jet);
   border-radius: inherit;
   z-index: -1;
+}
+
+/* PDF Modal styles */
+.pdf-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+}
+
+.pdf-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.pdf-modal-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(1100px, 95%);
+  height: min(85vh, 950px);
+  background: var(--eerie-black-2);
+  border: 1px solid var(--jet);
+  border-radius: 10px;
+  box-shadow: var(--shadow-5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.pdf-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--white-2);
+  font-size: 28px;
+  padding: 8px 12px;
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.pdf-modal-body {
+  flex: 1 1 auto;
+  background: var(--eerie-black-1);
+}
+
+.pdf-modal object {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 600px) {
+  .pdf-modal-panel {
+    width: 98%;
+    height: 90vh;
+    border-radius: 6px;
+  }
+
+  .pdf-modal-close {
+    font-size: 22px;
+  }
 }
 
 
@@ -607,19 +804,57 @@ main {
 \*-----------------------------------*/
 
 .about .article-title {
-  margin-bottom: 15px;
+  margin-bottom: 22px;
 }
 
+/* Headings: introduce a restrained serif for an academic feel while keeping
+   the UI font for body text. This creates a subtle, elegant contrast. */
+.h2,
+.h3 {
+  font-family: Georgia, 'Times New Roman', serif;
+  color: var(--white-2);
+  font-weight: var(--fw-600);
+  letter-spacing: -0.4px;
+}
+
+/* ABOUT: body copy uses the UI sans-serif but with improved spacing and
+   contrast for accessibility. Keep the long-version full width behaviour. */
 .about-text {
-  color: var(--light-gray);
-  font-size: var(--fs-6);
-  font-weight: var(--fw-300);
-  line-height: 1.6;
+  color: var(--white-2);
+  font-size: clamp(16px, 1.9vw, 18px);
+  font-weight: var(--fw-400);
+  line-height: 1.75;
+  margin: 0.7rem 0 1.4rem 0;
 }
 
 .about-text p {
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 }
+
+/* Lead paragraph: slightly larger and bolder to create a strong opening
+   for academic tone. */
+.about-text .lead {
+  font-size: clamp(18px, 2.1vw, 20px);
+  line-height: 1.9;
+  font-weight: var(--fw-600);
+  margin-bottom: 1.1rem;
+  color: var(--white-2);
+}
+
+/* Muted, elegant accent for highlights instead of a saturated yellow. */
+.about-text strong,
+.about-text b {
+  color: var(--vegas-gold);
+  font-weight: var(--fw-600);
+}
+
+/* Links inside about should be legible and meet contrast requirements */
+.about-text a {
+  color: var(--vegas-gold);
+  text-decoration: underline;
+}
+
+/* Slightly tighter paragraph measure for the short view remains via #short-version */
 
 
 
@@ -1021,21 +1256,26 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--bg-gradient-yellow-1);
+  background: linear-gradient(90deg, rgba(70, 58, 25, 1) 0%, rgba(212, 186, 82, 1) 100%);
   color: var(--eerie-black-1);
   font-size: var(--fs-6);
-  font-weight: var(--fw-500);
-  padding: 12px 24px;
+  font-weight: var(--fw-600);
+  padding: 12px 22px;
   border-radius: 8px;
   text-decoration: none;
-  transition: var(--transition-1);
-  box-shadow: var(--shadow-1);
+  transition: transform var(--transition-1), box-shadow var(--transition-1), filter var(--transition-1);
+  box-shadow: none;
 }
 
-.pdf-cv-button:hover {
-  background: var(--bg-gradient-yellow-2);
+.pdf-cv-button:hover,
+.pdf-cv-button:focus {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-2);
+  filter: brightness(1.03);
+}
+
+.pdf-cv-button:focus-visible {
+  outline: 3px solid rgba(212, 186, 82, 0.28);
+  outline-offset: 3px;
 }
 
 .pdf-cv-button ion-icon {
@@ -1050,9 +1290,44 @@ main {
   box-shadow: var(--shadow-1);
 }
 
+/* Make CV controls blend with the page: remove the separate 'card' look */
+.pdf-cv-container {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.pdf-cv-content {
+  padding: 0;
+}
+
+.pdf-preview-container {
+  margin: 0;
+  /* no inline preview by default; keep if present elsewhere */
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
 .pdf-cv-button-container {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Only show the PDF controls when the resume article is active */
+.pdf-cv-section {
+  display: none;
+}
+
+.resume.active .pdf-cv-section {
+  display: block;
 }
 
 

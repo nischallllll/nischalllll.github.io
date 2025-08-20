@@ -2,22 +2,75 @@
 <article class="about  active" data-page="about">
   <header>
     <h2 class="h2 article-title">{{about.HEADER.label}}</h2>
+    <div class="about-toggle-row">
+      <!-- Toggle switch for short/long version (placed under the title, left-aligned) -->
+      <label class="toggle-switch" aria-label="Toggle short/long presentation">
+        <input type="checkbox" id="about-toggle" class="toggle-checkbox" checked>
+        <span class="toggle-slider" aria-hidden="true"></span>
+      </label>
+    </div>
   </header>
 
-  <!--- PRESENTATION --->
   <section class="about-text">
-    {# collect and render only non-empty lines; mark the first rendered paragraph as a lead #}
-    {% set printed = namespace(flag=false) %}
-    {% for line in about.PRESENTATION.description.split('\n') %}
-      {% if line.strip() %}
-        {% if not printed.flag %}
-          <p class="lead">{{ line | safe }}</p>
-          {% set printed.flag = true %}
-        {% else %}
-          <p>{{ line | safe }}</p>
+
+    {# Normalize short presentation from either top-level or under PRESENTATION #}
+    {% set short_present = None %}
+    {% if about.short_presentation is defined %}
+      {% set short_present = about.short_presentation %}
+    {% elif about.PRESENTATION is defined and about.PRESENTATION.short_presentation is defined %}
+      {% set short_present = about.PRESENTATION.short_presentation %}
+    {% endif %}
+
+    {% if short_present is not none %}
+    <!-- Long version (hidden by default) -->
+    <div id="long-version" style="display: none;">
+      {% set printed = namespace(flag=false) %}
+      {% for line in about.PRESENTATION.description.split('\n') %}
+        {% if line.strip() %}
+          {% if not printed.flag %}
+            <p class="lead">{{ line | safe }}</p>
+            {% set printed.flag = true %}
+          {% else %}
+            <p>{{ line | safe }}</p>
+          {% endif %}
         {% endif %}
-      {% endif %}
-    {% endfor %}
+      {% endfor %}
+    </div>
+
+    <!-- Short version -->
+    <div id="short-version">
+      {% set printed_s = namespace(flag=false) %}
+      {% for line in short_present.split('\n') %}
+        {% if line.strip() %}
+          {% if not printed_s.flag %}
+            <p class="lead">{{ line | safe }}</p>
+            {% set printed_s.flag = true %}
+          {% else %}
+            <p>{{ line | safe }}</p>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  {% else %}
+
+    <!-- No short version provided: show full presentation only -->
+    <div id="long-version">
+      {% set printed = namespace(flag=false) %}
+      {% for line in about.PRESENTATION.description.split('\n') %}
+        {% if line.strip() %}
+          {% if not printed.flag %}
+            <p class="lead">{{ line | safe }}</p>
+            {% set printed.flag = true %}
+          {% else %}
+            <p>{{ line | safe }}</p>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% endif %}
+
   </section>
 
   <!--- DOING -->
@@ -62,7 +115,7 @@
         </div>
       </li>
       {% endfor %}
-  </ul>
+    </ul>
   </section>
 
   <!--- popup modal -->
@@ -74,16 +127,14 @@
       </button>
       <div class="modal-img-wrapper">
         <figure class="modal-avatar-box">
-          <img src="./src/images/avatar-1.png" alt="{{profile.USER.name}}" width="80" data-modal-img>
+          <img src="config/assets/avatars/avatar-1.png" alt="{{profile.USER.name}}" width="80" data-modal-img>
         </figure>
         <img src="./src/images/icon-quote.svg" alt="quote icon">
       </div>
       <div class="modal-content">
         <h4 class="h3 modal-title" data-modal-title>{{profile.USER.name}}</h4>
-        {# lorem #}
         <div data-modal-text>
           <p>
-            {# lorem #}
           </p>
         </div>
       </div>
@@ -106,4 +157,70 @@
     </ul>
   </section>
   {% endif %}
+
+  {# Inline page script: keeps toggle behavior local and simple #}
+  <script>
+    (function(){
+      const toggle = document.getElementById('about-toggle');
+      const longVersion = document.getElementById('long-version');
+      const shortVersion = document.getElementById('short-version');
+      const storageKey = 'aboutPresentationIsShort_v1';
+
+      function showWithAnimation(showEl, hideEl) {
+        try {
+          if (!showEl || !hideEl) return;
+          // Prepare
+          showEl.classList.remove('fade-slide-exit-active', 'fade-slide-exit');
+          hideEl.classList.remove('fade-slide-enter-active', 'fade-slide-enter');
+
+          // Start hiding old
+          hideEl.classList.add('fade-slide-exit');
+          // allow a frame
+          requestAnimationFrame(() => {
+            hideEl.classList.add('fade-slide-exit-active');
+            hideEl.addEventListener('transitionend', function onEnd() {
+              hideEl.removeEventListener('transitionend', onEnd);
+              hideEl.style.display = 'none';
+              // show new
+              showEl.style.display = '';
+              showEl.classList.add('fade-slide-enter');
+              requestAnimationFrame(() => showEl.classList.add('fade-slide-enter-active'));
+            });
+          });
+        } catch (e) {
+          // fallback
+          hideEl.style.display = 'none';
+          showEl.style.display = '';
+        }
+      }
+
+      function setView(isShort) {
+        if (!longVersion || !shortVersion) return;
+        try { localStorage.setItem(storageKey, isShort ? '1' : '0'); } catch(e){}
+        if (toggle) toggle.checked = isShort;
+        if (isShort) {
+          showWithAnimation(shortVersion, longVersion);
+        } else {
+          showWithAnimation(longVersion, shortVersion);
+        }
+      }
+
+      // initialize from storage if available; otherwise default to short when toggle exists
+      try {
+        const saved = localStorage.getItem(storageKey);
+        if (saved !== null) {
+          setView(saved === '1');
+        } else if (toggle) {
+          setView(toggle.checked);
+        }
+      } catch(e) {}
+
+      if (toggle) {
+        toggle.addEventListener('change', function() {
+          setView(this.checked);
+        });
+      }
+    })();
+  </script>
+
 </article>

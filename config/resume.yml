@@ -1,25 +1,15 @@
 HEADER:
   label: "CV"
 
-PDF_CV:
-  enabled: true
-  title: "My CV"
-  description: "View my complete CV below. You can also download it for offline viewing."
-  button_text: "Download CV (PDF)"
-  pdf_url: "config/assets/Nischal_Bhandari_CV.pdf"
-  icon: "download-outline"
-  show_preview: true
-  preview_height: "800px"
-
-# Legacy sections - disabled by default
+# Legacy sections - enabled by default
 EDUCATION:
-  enabled: false
+  enabled: true
   label: "Education"
   items: []
 
 EXPERIENCE:
-  enabled: false
-  label: "Experience"
+  enabled: true
+  label: "Research Experience"
   items: []
 
 LANGUAGES:
@@ -35,3 +25,13 @@ SKILLS:
   display_percentage_values: true
   label: "My Skills"
   items: []
+
+PDF_CV:
+  enabled: true
+  title: ""
+  description: ""
+  button_text: "Download CV (PDF)"
+  pdf_url: "config/assets/Nischal_Bhandari_CV.pdf"
+  icon: "download-outline"
+  show_preview: true
+  preview_height: "800px"

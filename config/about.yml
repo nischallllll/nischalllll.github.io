@@ -2,6 +2,9 @@ HEADER:
   label: "About me"
 
 PRESENTATION:
+
+  short_presentation: |
+    I am a Computational Biologist at Cold Spring Harbor Laboratory working in Dr. Peter Westcott's Laboratory. My research focuses on understanding the genomic basis of cancer through advanced computational approaches and cutting-edge sequencing technologies.
   description: |
     I am a Computational Biologist at Cold Spring Harbor Laboratory working in Dr. Peter Westcott's Laboratory. My research focuses on understanding the genomic basis of cancer through advanced computational approaches and cutting-edge sequencing technologies.
 
