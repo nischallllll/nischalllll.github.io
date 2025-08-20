@@ -14,16 +14,16 @@ DOING:
   label: "🧬 Research Focus"
   items:
     - title: "Cancer Genomics Research"
-      icon: "config/assets/icons/code.svg"
+      icon: "config/assets/icons/cancer.svg"
       description: "Analyzing high-throughput genomic data to understand cancer progression and disease heterogeneity."
     - title: "Single-cell Analysis"
-      icon: "config/assets/icons/ai.svg"
+      icon: "config/assets/icons/cell.svg"
       description: "Processing and analyzing single-cell RNA sequencing data to uncover cellular dynamics."
     - title: "Bioinformatics Pipeline Development"
       icon: "config/assets/icons/laptop-code.svg"
       description: "Developing computational tools and pipelines for genomic data analysis."
     - title: "Spatial Transcriptomics"
-      icon: "config/assets/icons/compass.svg"
+      icon: "config/assets/icons/colon.svg"
       description: "Analyzing spatial transcriptomic data to understand tissue organization and cell interactions."
 
 CURRENT:
