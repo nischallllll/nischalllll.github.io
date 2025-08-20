@@ -26,21 +26,19 @@
   --bg-gradient-onyx: linear-gradient(to bottom right,
       hsl(240, 1%, 25%) 3%,
       hsl(0, 0%, 19%) 97%);
-  --bg-gradient-jet: linear-gradient(to bottom right,
-      hsla(240, 1%, 18%, 0.251) 0%,
-      hsla(240, 2%, 11%, 0) 100%), hsl(240, 2%, 13%);
-  --bg-gradient-yellow-1: linear-gradient(to bottom right,
-      hsl(45, 100%, 71%) 0%,
-      hsla(36, 100%, 69%, 0) 50%);
-  --bg-gradient-yellow-2: linear-gradient(135deg,
-      hsla(45, 100%, 71%, 0.251) 0%,
-      hsla(35, 100%, 68%, 0) 59.86%), hsl(240, 2%, 13%);
+  /* flatter, desaturated palette for a scholarly look (solid colors, not gradients) */
+  --bg-gradient-jet: hsl(232, 8%, 12%);
+  --bg-gradient-yellow-1: hsl(42, 24%, 60%);
+  --bg-gradient-yellow-2: hsl(42, 20%, 50%);
   --border-gradient-onyx: linear-gradient(to bottom right,
       hsl(0, 0%, 25%) 0%,
       hsla(0, 0%, 25%, 0) 50%);
   --text-gradient-yellow: linear-gradient(to right,
       hsl(45, 100%, 72%),
       hsl(35, 100%, 68%));
+  /* use single desaturated accent for text highlights */
+  --border-gradient-onyx: hsl(232, 8%, 14%);
+  --text-gradient-yellow: hsl(42, 24%, 60%);
 
   /* solid */
 
@@ -53,6 +51,8 @@
   --white-2: hsl(0, 0%, 98%);
   --orange-yellow-crayola: hsl(45, 100%, 72%);
   --vegas-gold: hsl(45, 54%, 58%);
+  /* desaturated gold */
+  --vegas-gold: hsl(42, 26%, 54%);
   --light-gray: hsl(0, 0%, 84%);
   --light-gray-70: hsla(0, 0%, 84%, 0.7);
   --bittersweet-shimmer: hsl(0, 43%, 51%);
@@ -89,6 +89,13 @@
   --shadow-3: 0 16px 40px hsla(0, 0%, 0%, 0.25);
   --shadow-4: 0 25px 50px hsla(0, 0%, 0%, 0.15);
   --shadow-5: 0 24px 80px hsla(0, 0%, 0%, 0.25);
+
+  /* softened shadow palette for an elegant, subtle depth */
+  --shadow-1-soft: -4px 8px 24px hsla(0, 0%, 0%, 0.12);
+  --shadow-2-soft: 0 12px 24px hsla(0, 0%, 0%, 0.10);
+  --shadow-3-soft: 0 12px 30px hsla(0, 0%, 0%, 0.10);
+  --shadow-4-soft: 0 20px 40px hsla(0, 0%, 0%, 0.08);
+  --shadow-5-soft: 0 20px 60px hsla(0, 0%, 0%, 0.10);
 
   /**
    * transition
@@ -163,6 +170,32 @@ html {
 
 body {
   background: var(--smoky-black);
+}
+
+/* typographic smoothing and readability */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* global focus-visible for keyboard users */
+:focus-visible {
+  outline: 3px solid rgba(212, 186, 82, 0.18);
+  outline-offset: 3px;
+}
+
+/* subtle content link styling */
+a {
+  color: var(--vegas-gold);
+  text-decoration: underline;
+  text-decoration-color: rgba(212, 186, 82, 0.12);
+  text-underline-offset: 3px;
+}
+
+/* small typographic tweak for the navbar */
+.navbar-link {
+  letter-spacing: 0.4px;
 }
 
 
@@ -630,23 +663,13 @@ main {
   width: auto;
   display: inline-block;
   /* Dynamic gradient text effect */
-  background: linear-gradient(90deg, var(--orange-yellow-crayola), var(--vegas-gold), var(--white-1));
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  animation: gradient-move 3s linear infinite;
+  /* Use a static, desaturated gold tone for headings */
+  background: none;
+  color: var(--vegas-gold);
+  -webkit-text-fill-color: initial;
+  animation: none;
 }
 
-@keyframes gradient-move {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  100% {
-    background-position: 100% 50%;
-  }
-}
 
 .info_more-btn {
   position: absolute;

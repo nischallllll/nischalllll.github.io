@@ -142,16 +142,50 @@
     const modal = document.getElementById('pdf-modal');
     const overlay = modal && modal.querySelector('[data-pdf-overlay]');
     const closeBtn = modal && modal.querySelector('.pdf-modal-close');
-    const previouslyFocused = {el: null};
+    let previouslyFocused = null;
+    let focusableElements = [];
+
+    function updateFocusableElements(){
+      if(!modal) return;
+      focusableElements = Array.from(modal.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+      // filter out elements that are not visible
+      focusableElements = focusableElements.filter(el => el.offsetWidth > 0 || el.offsetHeight > 0 || el.getClientRects().length);
+    }
+
+    function trapTabKey(e){
+      if(e.key !== 'Tab') return;
+      updateFocusableElements();
+      if(focusableElements.length === 0){
+        e.preventDefault();
+        return;
+      }
+      const firstEl = focusableElements[0];
+      const lastEl = focusableElements[focusableElements.length - 1];
+
+      if(e.shiftKey){
+        if(document.activeElement === firstEl || document.activeElement === modal){
+          e.preventDefault();
+          lastEl.focus();
+        }
+      } else {
+        if(document.activeElement === lastEl){
+          e.preventDefault();
+          firstEl.focus();
+        }
+      }
+    }
 
     function openModal(){
       if(!modal) return;
-      previouslyFocused.el = document.activeElement;
+      previouslyFocused = document.activeElement;
       modal.setAttribute('aria-hidden','false');
       modal.style.display = 'block';
       document.body.style.overflow = 'hidden';
-      // focus the close button for keyboard users
-      closeBtn && closeBtn.focus();
+      updateFocusableElements();
+      // focus the close button (or first focusable element) for keyboard users
+      const toFocus = closeBtn || focusableElements[0] || modal;
+      toFocus && toFocus.focus();
+      document.addEventListener('keydown', handleKeydown);
     }
 
     function closeModal(){
@@ -159,16 +193,22 @@
       modal.setAttribute('aria-hidden','true');
       modal.style.display = 'none';
       document.body.style.overflow = '';
-      if(previouslyFocused.el) previouslyFocused.el.focus();
+      document.removeEventListener('keydown', handleKeydown);
+      if(previouslyFocused && previouslyFocused.focus) previouslyFocused.focus();
     }
 
-    if(openBtn) openBtn.addEventListener('click', openModal);
-    if(overlay) overlay.addEventListener('click', closeModal);
-    if(closeBtn) closeBtn.addEventListener('click', closeModal);
+    function handleKeydown(e){
+      if(e.key === 'Escape'){
+        e.preventDefault();
+        closeModal();
+        return;
+      }
+      trapTabKey(e);
+    }
 
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape') closeModal();
-    });
+    if(openBtn) openBtn.addEventListener('click', function(e){ e.preventDefault(); openModal(); });
+    if(overlay) overlay.addEventListener('click', function(){ closeModal(); });
+    if(closeBtn) closeBtn.addEventListener('click', function(){ closeModal(); });
 
   })();
 </script>
