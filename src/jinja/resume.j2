@@ -124,14 +124,14 @@
   {% endif %}
 </article>
 <!-- PDF Modal Viewer -->
-<div id="pdf-modal" class="pdf-modal" role="dialog" aria-modal="true" aria-hidden="true">
+<div id="pdf-modal" class="pdf-modal" role="dialog" aria-modal="true" aria-hidden="true" data-pdf-url="{{resume.PDF_CV.pdf_url}}">
   <div class="pdf-modal-overlay" data-pdf-overlay></div>
   <div class="pdf-modal-panel" role="document">
     <button class="pdf-modal-close" aria-label="Close CV viewer">&times;</button>
     <div class="pdf-modal-body">
-      <object id="pdf-modal-object" data="{{resume.PDF_CV.pdf_url}}" type="application/pdf" width="100%" height="100%">
-        <p>Your browser doesn't support PDF preview. <a href="{{resume.PDF_CV.pdf_url}}" target="_blank">Click here to view the PDF</a>.</p>
-      </object>
+      <iframe id="pdf-modal-object" src="" frameborder="0" width="100%" height="100%" title="CV preview">
+        <p>Your browser doesn't support embedded PDFs. <a href="{{resume.PDF_CV.pdf_url}}" target="_blank">Click here to view the PDF</a>.</p>
+      </iframe>
     </div>
   </div>
 </div>
@@ -142,47 +142,36 @@
     const modal = document.getElementById('pdf-modal');
     const overlay = modal && modal.querySelector('[data-pdf-overlay]');
     const closeBtn = modal && modal.querySelector('.pdf-modal-close');
+    const pdfFrame = modal && modal.querySelector('#pdf-modal-object');
+    const pdfUrl = modal ? modal.getAttribute('data-pdf-url') : null;
     let previouslyFocused = null;
     let focusableElements = [];
 
     function updateFocusableElements(){
       if(!modal) return;
       focusableElements = Array.from(modal.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'));
-      // filter out elements that are not visible
       focusableElements = focusableElements.filter(el => el.offsetWidth > 0 || el.offsetHeight > 0 || el.getClientRects().length);
     }
 
     function trapTabKey(e){
       if(e.key !== 'Tab') return;
       updateFocusableElements();
-      if(focusableElements.length === 0){
-        e.preventDefault();
-        return;
-      }
+      if(focusableElements.length === 0){ e.preventDefault(); return; }
       const firstEl = focusableElements[0];
       const lastEl = focusableElements[focusableElements.length - 1];
-
-      if(e.shiftKey){
-        if(document.activeElement === firstEl || document.activeElement === modal){
-          e.preventDefault();
-          lastEl.focus();
-        }
-      } else {
-        if(document.activeElement === lastEl){
-          e.preventDefault();
-          firstEl.focus();
-        }
-      }
+      if(e.shiftKey){ if(document.activeElement === firstEl || document.activeElement === modal){ e.preventDefault(); lastEl.focus(); } }
+      else { if(document.activeElement === lastEl){ e.preventDefault(); firstEl.focus(); } }
     }
 
     function openModal(){
       if(!modal) return;
       previouslyFocused = document.activeElement;
+      // set iframe src to load the PDF (more consistent across Safari/Brave mobile)
+      if(pdfFrame && pdfUrl){ try { pdfFrame.src = pdfUrl; } catch(e){} }
       modal.setAttribute('aria-hidden','false');
       modal.style.display = 'block';
       document.body.style.overflow = 'hidden';
       updateFocusableElements();
-      // focus the close button (or first focusable element) for keyboard users
       const toFocus = closeBtn || focusableElements[0] || modal;
       toFocus && toFocus.focus();
       document.addEventListener('keydown', handleKeydown);
@@ -193,18 +182,13 @@
       modal.setAttribute('aria-hidden','true');
       modal.style.display = 'none';
       document.body.style.overflow = '';
+      // clear iframe src so next open will refresh the content
+      if(pdfFrame){ try { pdfFrame.src = ''; } catch(e){} }
       document.removeEventListener('keydown', handleKeydown);
       if(previouslyFocused && previouslyFocused.focus) previouslyFocused.focus();
     }
 
-    function handleKeydown(e){
-      if(e.key === 'Escape'){
-        e.preventDefault();
-        closeModal();
-        return;
-      }
-      trapTabKey(e);
-    }
+    function handleKeydown(e){ if(e.key === 'Escape'){ e.preventDefault(); closeModal(); return; } trapTabKey(e); }
 
     if(openBtn) openBtn.addEventListener('click', function(e){ e.preventDefault(); openModal(); });
     if(overlay) overlay.addEventListener('click', function(){ closeModal(); });

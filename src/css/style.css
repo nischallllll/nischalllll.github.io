@@ -23,19 +23,13 @@
 
   /* gradient */
 
-  --bg-gradient-onyx: linear-gradient(to bottom right,
-      hsl(240, 1%, 25%) 3%,
-      hsl(0, 0%, 19%) 97%);
+  --bg-gradient-onyx: var(--onyx);
   /* flatter, desaturated palette for a scholarly look (solid colors, not gradients) */
   --bg-gradient-jet: hsl(232, 8%, 12%);
   --bg-gradient-yellow-1: hsl(42, 24%, 60%);
   --bg-gradient-yellow-2: hsl(42, 20%, 50%);
-  --border-gradient-onyx: linear-gradient(to bottom right,
-      hsl(0, 0%, 25%) 0%,
-      hsla(0, 0%, 25%, 0) 50%);
-  --text-gradient-yellow: linear-gradient(to right,
-      hsl(45, 100%, 72%),
-      hsl(35, 100%, 68%));
+  --border-gradient-onyx: hsl(232, 8%, 14%);
+  --text-gradient-yellow: hsl(42, 24%, 60%);
   /* use single desaturated accent for text highlights */
   --border-gradient-onyx: hsl(232, 8%, 14%);
   --text-gradient-yellow: hsl(42, 24%, 60%);
@@ -50,7 +44,6 @@
   --white-1: hsl(0, 0%, 100%);
   --white-2: hsl(0, 0%, 98%);
   --orange-yellow-crayola: hsl(45, 100%, 72%);
-  --vegas-gold: hsl(45, 54%, 58%);
   /* desaturated gold */
   --vegas-gold: hsl(42, 26%, 54%);
   --light-gray: hsl(0, 0%, 84%);
@@ -697,7 +690,7 @@ main {
 
 .info_more-btn:hover,
 .info_more-btn:focus {
-  background: var(--bg-gradient-yellow-1);
+  background: var(--vegas-gold);
 }
 
 .info_more-btn:hover::before,
@@ -1279,7 +1272,7 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(90deg, rgba(70, 58, 25, 1) 0%, rgba(212, 186, 82, 1) 100%);
+  background: var(--vegas-gold);
   color: var(--eerie-black-1);
   font-size: var(--fs-6);
   font-weight: var(--fw-600);
@@ -2021,7 +2014,7 @@ textarea.form-input::-webkit-resizer {
 }
 
 .form-btn:hover {
-  background: var(--bg-gradient-yellow-1);
+  background: var(--vegas-gold);
 }
 
 .form-btn:hover::before {
