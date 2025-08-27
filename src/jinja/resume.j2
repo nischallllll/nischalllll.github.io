@@ -145,6 +145,15 @@
   <div class="pdf-modal-panel" role="document">
     <button class="pdf-modal-close" aria-label="Close CV viewer">&times;</button>
     <div class="pdf-modal-body">
+      <div class="pdf-modal-mobile-message">
+        <a href="{{resume.PDF_CV.pdf_url}}" class="pdf-cv-button" download style="margin-bottom:8px;">
+          <ion-icon name="download-outline"></ion-icon>
+          <span>Download CV (PDF)</span>
+        </a>
+        <div class="pdf-cv-mobile-note">
+          <strong>Note:</strong> In-browser PDF viewing is limited on many mobile browsers. For the full CV, please use the download button above.
+        </div>
+      </div>
       <iframe id="pdf-modal-object" src="" frameborder="0" width="100%" height="100%" title="CV preview">
         <p>Your browser doesn't support embedded PDFs. <a href="{{resume.PDF_CV.pdf_url}}" target="_blank">Click here to view the PDF</a>.</p>
       </iframe>
