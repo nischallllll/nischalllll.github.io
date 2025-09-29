@@ -1,6 +1,10 @@
 # Custom
 *.ipynb
+# Ignore HTML by default, but keep site entry points and posts
 *.html
+!index.html
+!posts/*.html
+!posts/**/*.html
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
