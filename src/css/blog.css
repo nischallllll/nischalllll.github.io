@@ -1,0 +1,147 @@
+/* Minimal, modern article styling for standalone blog posts */
+:root {
+    --blog-bg: #ffffff;
+    --blog-text: #1b1b1b;
+    --blog-muted: #616161;
+    --blog-accent: #2b6cb0;
+    --blog-border: #e8e8e8;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --blog-bg: #0f0f0f;
+        --blog-text: #eaeaea;
+        --blog-muted: #b5b5b5;
+        --blog-accent: #7cb2ff;
+        --blog-border: #2a2a2a;
+    }
+}
+
+html,
+body {
+    background: var(--blog-bg);
+    color: var(--blog-text);
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.7;
+}
+
+/* Container */
+.post-container {
+    max-width: 760px;
+    margin: 64px auto;
+    padding: 0 20px;
+}
+
+/* Title at top, centered */
+.post-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(32px, 6vw, 48px);
+    line-height: 1.2;
+    margin: 0 0 12px 0;
+    text-align: center;
+    font-weight: 700;
+}
+
+.post-title {
+    display: block;
+    margin: 0 auto 12px auto;
+    /* auto left/right centers it */
+    text-align: center;
+    /* centers multi-line text inside */
+    width: fit-content;
+    /* shrink-wraps the h1 */
+}
+
+
+/* Meta info (date) */
+.post-meta {
+    color: var(--blog-muted);
+    font-size: 15px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.post-header {
+    text-align: center;
+}
+
+/* Body text */
+.post-body {
+    font-size: 18px;
+}
+
+.post-body p {
+    margin: 0 0 22px 0;
+}
+
+.post-body h2 {
+    font-size: 28px;
+    margin: 36px 0 16px 0;
+    font-weight: 600;
+}
+
+.post-body h3 {
+    font-size: 22px;
+    margin: 28px 0 14px 0;
+    font-weight: 600;
+}
+
+/* Links */
+.post-body a {
+    color: var(--blog-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+}
+
+.post-body a:hover {
+    color: var(--blog-text);
+    background: var(--blog-accent);
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+/* Figures / images */
+.post-body figure {
+    margin: 28px 0;
+    text-align: center;
+}
+
+.post-body img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.post-body figcaption {
+    color: var(--blog-muted);
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Divider */
+.post-divider {
+    height: 1px;
+    background: var(--blog-border);
+    margin: 40px 0;
+}
+
+/* Back link */
+.post-back {
+    margin-top: 28px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.post-back a {
+    color: var(--blog-accent);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.post-back a:hover {
+    color: var(--blog-text);
+    background: var(--blog-accent);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
