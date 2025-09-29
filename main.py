@@ -50,3 +50,22 @@ if __name__ == "__main__":
     portfolio = Portfolio()
     context = {key: portfolio.load_config_file(key) for key in portfolio.config_files}
     portfolio.render_template("index.j2", "index.html", context)
+    # Write internal blog post stubs if any post URLs point to local html under posts/
+    try:
+        blog_cfg = context.get("blog", {})
+        posts = blog_cfg.get("POSTS", []) if isinstance(blog_cfg, dict) else []
+        for post in posts:
+            url = post.get("url")
+            title = post.get("title", "")
+            published = post.get("published", "")
+            if isinstance(url, str) and not url.startswith("http") and url.endswith(".html"):
+                # ensure the directory exists and write a minimal HTML if file doesn't exist
+                import os
+                os.makedirs(os.path.dirname(url), exist_ok=True)
+                if not os.path.exists(url):
+                    html = f"""<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>{title}</title>\n  <link rel=\"stylesheet\" href=\"../src/css/style.css\">\n</head>\n<body>\n  <main style=\"max-width: 760px; margin: 40px auto; padding: 0 16px; color: var(--white-2);\">\n    <h1 style=\"margin-bottom: 8px;\">{title}</h1>\n    <p style=\"color: var(--light-gray-70); margin-bottom: 20px;\">{published}</p>\n    <article>\n      <p>Start writing your post content here. You can replace this file with your full article.</p>\n    </article>\n    <p style=\"margin-top: 24px;\"><a href=\"../index.html#blog\">← Back to Blog</a></p>\n  </main>\n</body>\n</html>\n"""
+                    self = portfolio
+                    self.write_file(url, html)
+    except Exception:
+        # non-fatal; skip stub generation errors
+        pass

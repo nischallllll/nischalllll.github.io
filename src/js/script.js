@@ -164,6 +164,15 @@ for (let i = 0; i < navigationLinks.length; i++) {
       } catch (e) {
         // ignore storage errors (e.g., Safari private mode)
       }
+
+      // also sync the URL hash for deep-linking
+      try {
+        if (location.hash.replace('#', '') !== clickedName) {
+          location.hash = clickedName;
+        }
+      } catch (e) {
+        // ignore hash update errors
+      }
     }
 
     // update nav link active state
@@ -177,11 +186,14 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
 // Restore saved active page (if any) on load so navbar keeps state
 try {
+  // Priority: URL hash > saved localStorage state
+  const hashPage = (location.hash || '').replace('#', '').toLowerCase().trim();
   const savedPage = (localStorage.getItem('activePage') || '').toLowerCase().trim();
-  if (savedPage) {
-    const savedArticle = document.querySelector(`article[data-page="${savedPage}"]`);
+  const pageToRestore = hashPage || savedPage;
+  if (pageToRestore) {
+    const savedArticle = document.querySelector(`article[data-page="${pageToRestore}"]`);
     const savedNav = Array.from(navigationLinks).find((nl) => {
-      return ((nl.getAttribute('data-page') || nl.textContent) || '').toLowerCase().trim() === savedPage;
+      return ((nl.getAttribute('data-page') || nl.textContent) || '').toLowerCase().trim() === pageToRestore;
     });
 
     if (savedArticle) {
@@ -197,3 +209,28 @@ try {
 } catch (e) {
   // ignore storage read errors
 }
+
+// Respond to hash changes (deep links) even without a navbar button
+window.addEventListener('hashchange', function () {
+  const target = (location.hash || '').replace('#', '').toLowerCase().trim();
+  if (!target) return;
+  const targetPage = document.querySelector(`article[data-page="${target}"]`);
+  if (!targetPage) return;
+
+  Array.from(pages).forEach((p) => p.classList.remove('active'));
+  targetPage.classList.add('active');
+
+  try {
+    localStorage.setItem('activePage', target);
+  } catch (e) {
+    // ignore
+  }
+
+  // Update navbar active state if a corresponding button exists
+  const matchingNav = Array.from(navigationLinks).find((nl) => {
+    return ((nl.getAttribute('data-page') || nl.textContent) || '').toLowerCase().trim() === target;
+  });
+  Array.from(navigationLinks).forEach((nl) => nl.classList.remove('active'));
+  if (matchingNav) matchingNav.classList.add('active');
+  window.scrollTo(0, 0);
+});

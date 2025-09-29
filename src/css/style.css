@@ -276,11 +276,12 @@ article {
   --ionicon-stroke-width: 35px;
 }
 
-article {
+/* Only hide SPA pages, not all article elements (so standalone post content stays visible) */
+article[data-page] {
   display: none;
 }
 
-article.active {
+article[data-page].active {
   display: block;
   animation: fade 0.5s ease backwards;
 }
