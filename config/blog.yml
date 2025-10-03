@@ -13,5 +13,5 @@ POSTS:
     category: "Advice"
     subtitle: "Why trouble yourself with grad school?"
     published: "2025-09-29"
-    image: "config/assets/posts/blog-2.jpg"
+    #image: "config/assets/posts/blog-2.jpg"
     url: "posts/grad-school.html"
