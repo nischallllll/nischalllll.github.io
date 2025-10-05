@@ -10,7 +10,7 @@ POSTS:
 #    url: "https://medium.com"
   # blog1
   - title: "What, you want to got to a grad school?"
-    category: "Advice"
+    category: "Notes to self"
     subtitle: "Why trouble yourself with grad school?"
     published: "2025-09-29"
     #image: "config/assets/posts/blog-2.jpg"
